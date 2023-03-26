@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content="This is where your description goes">
+    <meta name="keywords" content="one, two, three">
+
+    <title>control de vacios</title>
+
+   
+</head>
+
+<body>
+    <!-- para añadir pales, necesito boton de reset, tipo de pale, por cuantos vacios va, cantidad que se añade -->
+    <h2>
+        <form action="/addPales" method="POST" class="clientSide">
+            
+                <input type="reset" value="X">
+                <label for="tipoPale">tipo de pale:</label>
+                <input type="text" name="tipoPale" id="tipoPale" placeholder="pale creado" required list="listaDePales">
+
+                <label for="cuantosVacios">de cuantos vacios?</label>
+                <input type="number" name="cuantosVacios" id="cuantosVacios" min="1" required value=96> 
+                <!--numero de vacios por pale-->
+                <label for="numeroDePalesIntroducidos"></label>
+                <input type="number" id="numeroDePalesIntroducidos" name="numeroDePalesIntroducidos" required min="1"
+                    value=1><!--usamos esto para introducir un numero de pales-->
+                <input name="submit" type="submit" value="Ingresar vacios" id="btnSubmit" />
+
+        </form>
+        <form action="/addVacios" method="POST" class="clientSide">
+            <label for="cuantosVaciosEntraron"> cuantos vacios entraron?</label>
+            <input type="number" name="cuantosVaciosEntraron" id="cuantosVaciosEntraron" min="1">
+            <input type="submit" name="agregar vacios" value="agregar vacios">
+        </form>
+    </h2>
+    <h2>
+        <form action="retirarPales" method="post" class="clientSide">
+            <div class="retirarPales">
+                <input type="reset" value="X">
+                <label for="paleABorrar">tipo de pale retirado:</label>
+                <input type="text" name="paleABorrar" id="paleABorrar" placeholder="tipo de retiro:" required
+                    list="listaDePales">
+                <label for="cuantosVaciosABorrar">de cuantos vacios?</label>
+                <input type="number" name="cuantosVaciosABorrar" required value=96 id="cuantosVaciosABorrar" min="1">
+                <input type="number" id="numeroDePalesABorrar" name="numeroDePalesABorrar" min="1" required value=1>
+                <input type="text" id="retirador" name="retirador" list="listaDeRetiradores">
+                <input name="submit" type="submit" value="retiro de vacios" id="btnDeletePale" required />
+            </div> <!-- valores en orden: tipoDePale, de cuantos vacios, cuantos pales son, quien retiro -->
+        </form>
+        <form action="/retirarVacios" method="POST" class="clientSide">
+            <label for="retiradorDeVacios"> quien retiro los vacios sueltos?</label>
+            <input type="text" id="retiradorDeVacios" name="retiradorDeVacios" list="listaDeRetiradores">
+            <label for="cuantosVaciosSalieron"> cuantos vacios salieron?</label>
+            <input type="number" name="cuantosVaciosSalieron" min="1" id="cuantosVaciosSalieron">
+            <input type="submit" name="retirar vacios" value="retirar vacios">
+        </form>
+    </h2>
+    <h2>
+   
+    </h2>
+
+    <h2>
+        <% for (let k in data.stock) { %>
+            <li>
+                <%= k %>: <%= data.stock[k] %>
+            </li>
+            <% } %>
+    </h2>
+
+    
+   
+    <span> --------------------------------------------------------------------------------------</span>
+    <h2>
+    <ul>
+        <% for(var i=0; i < data.dispRet.length; i++) { %>
+          <li>
+            <%= data.dispRet[i].retirador %>:<br>
+            <% for (var prop in data.dispRet[i]) { %>
+              <% if (prop !== 'retirador') { %>
+                <%= prop.charAt(0).toUpperCase() + prop.slice(1) %>: <%= data.dispRet[i][prop] %>
+                <% if (Object.keys(data.dispRet[i]).indexOf(prop) < Object.keys(data.dispRet[i]).length - 1) { %>
+                  | 
+                <% } %>
+              <% } %>
+            <% } %>
+          </li>
+        <% } %>
+      </ul>
+    </h2>
+    <datalist id="listaDePales">
+        <option>1</option>
+        <option>2</option>
+        <option>3</option>
+        <option>4</option>
+        <option>5</option>
+    </datalist>
+
+    <datalist id="listaDeRetiradores">
+        <option>A</option>
+        <option>B</option>
+        <option>C</option>
+        <option>D</option>
+        <option>E</option>
+    </datalist>
+
+    <script type="text/javascript" src="server.js"></script>
+    <script type="text/javascript" src="public\main.js"></script>
+    <script src="/main.js"></script>
+
+</body>
+
+</html>
+
+
+

@@ -1,0 +1,20 @@
+recordatorios: usar upsert en stockDelDia. si stockDelDia no existe, lo crea. si existe lo reemplaza. 
+
+funciones que faltan: 
+hacer mañana: (
+- agregar tipo de pale a lista de pales (especificar x cuanto va cada pale). agregar retirador a lista de retiradores. ) 
+
+- pasar todos los valores a minuscula
+
+- crear IF si los pales no son de 96.  -agregar coleccion index. mover stock actual a coleccion index. agarraria el numero de vacios de cada tipo de pales del objeto index y lo multiplicaria. 
+
+- hacer la cuenta final y comparar con numero actual (funcion).
+
+
+
+
+
+grabar stock del dia (usar upsert) (stock tiene que tener: el stock, la diferencia entre stock y real, 
+fecha del dia, retiros que hizo cada proveedor)
+-al grabar el stock, se debe cambiar el "stock de vacios" del valor que deberia haber, al valor real.
+
