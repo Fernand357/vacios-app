@@ -3,10 +3,10 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="description" content="This is where your description goes">
+    <meta name="description" content="App para control de vacios.">
     <meta name="keywords" content="one, two, three">
 
-    <title>control de vacios</title>
+    <title>Control de Vacios</title>
 
    
 </head>
@@ -40,7 +40,7 @@
             <div class="retirarPales">
                 <input type="reset" value="X">
                 <label for="paleABorrar">tipo de pale retirado:</label>
-                <input type="text" name="paleABorrar" id="paleABorrar" placeholder="tipo de retiro:" required
+                <input  name="paleABorrar" id="paleABorrar" placeholder="tipo de retiro:" required
                     list="listaDePales">
                 <label for="cuantosVaciosABorrar">de cuantos vacios?</label>
                 <input type="number" name="cuantosVaciosABorrar" required value=96 id="cuantosVaciosABorrar" min="1">
@@ -51,14 +51,13 @@
         </form>
         <form action="/retirarVacios" method="POST" class="clientSide">
             <label for="retiradorDeVacios"> quien retiro los vacios sueltos?</label>
-            <input type="text" id="retiradorDeVacios" name="retiradorDeVacios" list="listaDeRetiradores">
+             <input type="text" id="retiradorDeVacios" name="retiradorDeVacios" list="listaDeRetiradores"> 
+            <!-- <select id="retiradorDeVacios" name="retiradorDeVacios"> </select> -->
+
             <label for="cuantosVaciosSalieron"> cuantos vacios salieron?</label>
             <input type="number" name="cuantosVaciosSalieron" min="1" id="cuantosVaciosSalieron">
             <input type="submit" name="retirar vacios" value="retirar vacios">
         </form>
-    </h2>
-    <h2>
-   
     </h2>
 
     <h2>
@@ -73,7 +72,7 @@
    
     <span> --------------------------------------------------------------------------------------</span>
     <h2>
-    <ul>
+      <ul>
         <% for(var i=0; i < data.dispRet.length; i++) { %>
           <li>
             <%= data.dispRet[i].retirador %>:<br>
@@ -89,6 +88,7 @@
         <% } %>
       </ul>
     </h2>
+   
     <datalist id="listaDePales">
         <option>1</option>
         <option>2</option>
@@ -97,13 +97,14 @@
         <option>5</option>
     </datalist>
 
+   
     <datalist id="listaDeRetiradores">
-        <option>A</option>
-        <option>B</option>
-        <option>C</option>
-        <option>D</option>
-        <option>E</option>
-    </datalist>
+        <% retiradores.forEach(function(retiradores) { %>
+          <option value="<%= retiradores %>">
+        <% }); %>
+      </datalist>
+
+      
 
     <script type="text/javascript" src="server.js"></script>
     <script type="text/javascript" src="public\main.js"></script>

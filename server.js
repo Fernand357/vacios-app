@@ -5,6 +5,7 @@
     const MongoClient = require('mongodb').MongoClient
     const bodyParser = require('body-parser');
     const { ObjectId } = require('mongodb');
+    const retiradores = require('./retiradores.json');
 
 
 //necesitamos 2 funciones que modifique el objeto de stock original. y 1 funcion que lo copie como stock del dia.
@@ -23,21 +24,25 @@ MongoClient.connect(mongoDBkey, { useUnifiedTopology: true })
         app.get('/', (req, res) => { //renders main page vision
 
             retirosCollection.find().toArray()
-                .then(results => {
-                    
+                .then(results => {               
                     let dispRet = displayRetiros(results)
-                    
-                    
                     vaciosCollection.find().toArray()
                         .then(results => {
                             stock = displayStock(results) //stock is purely a variable for rendering, so modifying it is ok
-                            res.render('index.ejs', { data: {dispRet: dispRet,
-                                                stock : stock}})
+                            res.render('index.ejs', { retiradores: retiradores.retiradores, data: {dispRet: dispRet,
+                                                    stock : stock}})
                         })
-                    
                 })
         })
-    
+        app.get('/cierre', (req, res) => {
+            let vaciospresentes = vaciosCollection.findOne({ "tipo": "vacios sueltos"})  
+                .then(result => {
+                    const vacios = result["vacios que entraron"]
+                    res.render('cierre.ejs', {vacios: vacios})
+                }) //piramide de .thens para obtener los valores que quiero. incorporarlos a calculo final.  
+
+
+        })
        
         app.post('/addPales', (req, res) => { 
             const entradaStock = {[req.body.tipoPale]: Number(req.body.numeroDePalesIntroducidos)}
@@ -50,6 +55,9 @@ MongoClient.connect(mongoDBkey, { useUnifiedTopology: true })
                 })
                 .catch(error => console.error(error)) 
         }) //esta funcion añade los pales "creados" al objeto "stockActual"
+
+
+
         app.post('/addVacios', (req, res) => {
             const entradaVacios = {"vacios que entraron": Number(req.body.cuantosVaciosEntraron), "tipo": "vacios sueltos", "fecha de ingreso": returnDate()}
             vaciosCollection.insertOne(entradaVacios)
@@ -95,18 +103,8 @@ function displayStock(stock) {
     }
     return stockForDisplay
 }
- 
-    /* let newArrOfObjects = []
-    retiros.forEach(element => {
-        //if (newArrOfObjects.hasOwnProperty(element.retirador ))
-        let strElement = toString(element)
-        const found = newArrOfObjects.some(el => el.username === element.retirador);
-        if (!found) newArrOfObjects.push(strElement);
-        if (found) newArrOfObjects.push(strElement);
-    });
-    return newArrOfObjects */
     
-    function displayRetiros(arr) {
+function displayRetiros(arr) {
         const result = {};
       
         // iterate over each object in the array
@@ -128,14 +126,7 @@ function displayStock(stock) {
           const { tipo, ...rest } = products;
           return { retirador, ...rest };
         });
-      }
-      
-     //logre que chequee los retiradores. ahora, asignar a cada retirador lo que retiro. 
-     //recordar devolver mismo formato que display stock para no generar bugs.
-     //antes de continuar, crear lista de pales y pasar como argument. usar para ir añadiendo los retiros de cada uno
-
-
-
+}
 
 function returnDate() {
     let date_ob = new Date();
@@ -169,4 +160,3 @@ function mergeStocks(stock1, stock2){
     
 
 
-    

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Dynamic Select Drop-Down List</title>
+  </head>
+  <body>
+    <form>
+      <select id="my-select" name="my-select">
+        <option value="">--Please choose an option--</option>
+        <option value="option1">Option 1</option>
+        <option value="option2">Option 2</option>
+        <option value="option3">Option 3</option>
+      </select>
+    </form>
+    
+    <script>
+      // get the select element
+      const select = document.getElementById("my-select");
+      
+      // add an option to the select element
+      const option = document.createElement("option");
+      option.value = "option4";
+      option.text = "Option 4";
+      select.add(option);
+      
+      // remove an option from the select element
+      select.remove(2); // removes Option 2
+    </script>
+  </body>
+</html>

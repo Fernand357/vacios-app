@@ -1,5 +1,3 @@
-recordatorios: usar upsert en stockDelDia. si stockDelDia no existe, lo crea. si existe lo reemplaza. 
-
 funciones que faltan: 
 hacer mañana: (
 - agregar tipo de pale a lista de pales (especificar x cuanto va cada pale). agregar retirador a lista de retiradores. ) 
